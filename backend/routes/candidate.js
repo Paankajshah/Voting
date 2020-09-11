@@ -10,7 +10,7 @@ router.get("/candidates", async (req, res) => {
 
 router.post("/candidate", async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(200).send(error.details[0].message);
 
   let postCandidate = new Candidate({
     name: req.body.name,

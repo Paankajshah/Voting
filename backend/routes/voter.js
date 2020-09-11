@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const { Voter , validate} = require("../models/voters");
+const { date } = require("joi");
 
 router.get("/voters", async (req, res) => {
   const voter = await Voter.find();
@@ -29,7 +30,6 @@ router.get("/voter/:id", async (req, res) => {
 
   res.send(voter);
 });
-
 
 
 module.exports = router;
