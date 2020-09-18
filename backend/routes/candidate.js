@@ -15,6 +15,7 @@ router.post("/candidate", async (req, res) => {
   let postCandidate = new Candidate({
     name: req.body.name,
     email: req.body.email,
+    citizenship:req.body.citizenship
   });
 
   postCandidate = await postCandidate.save();

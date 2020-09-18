@@ -16,6 +16,7 @@ router.post("/voter", async (req, res) => {
   let postVoter = new Voter({
     name: req.body.name,
     email: req.body.email,
+    citizenship: req.body.citizenship,
   });
 
   postVoter = await postVoter.save();
