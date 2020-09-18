@@ -4,12 +4,21 @@ import { connect } from "react-redux";
 import "./admin.css";
 
 class Admin extends Component {
-  componentDidMount() {
+
+  componentDidMount(){
     this.props.candidateData();
     this.props.voterData();
   }
 
+  example = ()=>{
+    console.log("checking" , this.props)
+
+  }
+
+
   render() {
+    console.log("inside admin" , this.props.people.candidates)
+    
     const candData = this.props.people.candidates.length ? (
       this.props.people.candidates.map((result) => {
         return (
@@ -46,7 +55,9 @@ class Admin extends Component {
     );
 
     return (
+
       <div>
+        <button onClick={this.example} >click</button>
         <h2>Candidate Table</h2>
         <table>
           <tr>
@@ -75,4 +86,4 @@ class Admin extends Component {
   }
 }
 
-export default connect(store => ({people: store.cvData}) , {candidateData  , voterData})(Admin);
+export default connect(store => ({people: store.cvData}) , {candidateData , voterData })(Admin);

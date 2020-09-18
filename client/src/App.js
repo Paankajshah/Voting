@@ -2,17 +2,23 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Candidate from "./components/candidate/candidate";
 import voter from "./components/voter/voter";
-import { Provider } from "react-redux";
+import { connect, Provider } from "react-redux";
 import { store } from "./store";
+import { voterData, candidateData } from "./store/actions";
 import landing from "./components/landing/landing";
 import Admin from "./components/admin/admin";
+import ErrorMessage from "./components/ErrorMessage";
 
 class App extends Component {
   state = {};
 
+
+
+
   render() {
     return (
       <Provider store={store}>
+        <ErrorMessage />
         <Router>
           <Route path="/" exact component={landing} />
           <Route path="/candidate" component={Candidate} />
@@ -24,4 +30,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default (App);

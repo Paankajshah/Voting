@@ -1,6 +1,9 @@
 import React ,{useState , useEffect} from 'react'
 import axios from 'axios'
 import { useHistory} from 'react-router'
+import {connect } from 'react-redux';
+import { store } from '../../store';
+import { voterData, candidateData , addError } from "../../store/actions";
 
 function Candidate(props) {
     const [state , setState] = useState({
@@ -9,8 +12,12 @@ function Candidate(props) {
     });
 
     useEffect(()=>{
+      // console.log("inside cand1" , props.people.candidates)
+       
+       props.candidateData();
+      // console.log("inside cand2" , props.people.candidates)
 
-    });
+    },[]);
     const example=(e)=>{
         setState({
             ...state,
@@ -18,6 +25,8 @@ function Candidate(props) {
     }
     function submit(e){
         e.preventDefault();
+       console.log(props)
+
 
         console.log(state)
         const data = {
@@ -27,11 +36,19 @@ function Candidate(props) {
         console.log(data)
         axios.post('http://localhost:5000/voting/candidate/' , data)
             .then(res =>{
+                if (typeof(res.data) !== "object"){
+                    store.dispatch(addError(res.data))
+                  }
                 console.log(res.data)
             })
             .catch(err=>{
                 console.log(err.message)
             })
+
+
+
+
+
            
 
     }
@@ -48,4 +65,5 @@ function Candidate(props) {
     )
 }
 
-export default (Candidate)
+export default connect(store => ({people: store.cvData}) , {candidateData  , voterData})(Candidate);
+

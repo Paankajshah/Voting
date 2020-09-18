@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Joi = require("joi");
+const { string } = require('joi');
 
 // Create Schema
 const VoterSchema = new Schema({
@@ -10,6 +11,9 @@ const VoterSchema = new Schema({
   email: {
     type: String,
     required: true
+  },
+  citizenship: {
+    type:string
   },
   date: {
     type: Date,

@@ -12,6 +12,9 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
+  citizenship: {
+    type:String
+  },
   date: {
     type: Date,
     default: Date.now
@@ -28,3 +31,5 @@ function validateCandidate(candidate) {
 
 module.exports.Candidate = mongoose.model('candidate', CandidateSchema)
 module.exports.validate = validateCandidate
+
+
