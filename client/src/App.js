@@ -8,12 +8,10 @@ import { voterData, candidateData } from "./store/actions";
 import landing from "./components/landing/landing";
 import Admin from "./components/admin/admin";
 import ErrorMessage from "./components/ErrorMessage";
+import ApproveCandidate from "./components/admin/approveCandidate";
 
 class App extends Component {
   state = {};
-
-
-
 
   render() {
     return (
@@ -21,6 +19,7 @@ class App extends Component {
         <ErrorMessage />
         <Router>
           <Route path="/" exact component={landing} />
+          <Route path="/approvecand" component={ApproveCandidate} />
           <Route path="/candidate" component={Candidate} />
           <Route path="/admin" component={Admin} />
           <Route path="/voter" component={voter} />
@@ -30,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default (App);
+export default App;

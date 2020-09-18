@@ -11,8 +11,22 @@ class Admin extends Component {
   }
 
   example = ()=>{
-    console.log("checking" , this.props)
+    console.log("checking", this.props)
+    
 
+  }
+
+  approveCand = (data) => {
+    console.log("approveCand data ", data)
+    const params = [];
+    for (let i in data) {
+      params.push(encodeURIComponent(i) + '='+encodeURIComponent(data[i]))
+    }
+    const qparams = params.join('&');
+    this.props.history.push({
+      pathname: '/approvecand',
+      search: '?'+ qparams
+    })
   }
 
 
@@ -27,7 +41,7 @@ class Admin extends Component {
             <td>{result.email}</td>
             <td>{result.date}</td>
             <td>
-              <button>approve</button>
+              <button onClick={()=>this.approveCand(result)}>approve</button>
             </td>
           </tr>
         );
