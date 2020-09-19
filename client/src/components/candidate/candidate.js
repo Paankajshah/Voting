@@ -1,6 +1,5 @@
 import React ,{useState , useEffect} from 'react'
 import axios from 'axios'
-import { useHistory} from 'react-router'
 import {connect } from 'react-redux';
 import { store } from '../../store';
 import { voterData, candidateData , addError } from "../../store/actions";
@@ -8,7 +7,8 @@ import { voterData, candidateData , addError } from "../../store/actions";
 function Candidate(props) {
     const [state , setState] = useState({
         name:"",
-        email:"",
+        email: "",
+        citizenship:""
     });
 
     useEffect(()=>{
@@ -31,7 +31,8 @@ function Candidate(props) {
         console.log(state)
         const data = {
             "name": state.name,
-            "email":state.email
+            "email": state.email,
+            "citizenship":state.citizenship
         }
         console.log(data)
         axios.post('http://localhost:5000/voting/candidate/' , data)
@@ -53,16 +54,33 @@ function Candidate(props) {
 
     }
     return (
-        <div>
-            <form onSubmit={submit}>
-                <label htmlFor="name">Name</label>
-                <input className="name" name="name" value={state.name} onChange={example}/>
-                <label htmlFor="email">email</label>
-                <input className="email" name="email" value={state.email} onChange={example}/>
-                <button type="submit">sumbit</button>
-            </form>
-        </div>
-    )
+      <div>
+        <form onSubmit={submit}>
+          <label htmlFor="name">Name</label>
+          <input
+            className="name"
+            name="name"
+            value={state.name}
+            onChange={example}
+          />
+          <label htmlFor="email">email</label>
+          <input
+            className="email"
+            name="email"
+            value={state.email}
+            onChange={example}
+          />
+          <label htmlFor="citizenship">citizenship</label>
+          <input
+            className="citizen"
+            name="citizenship"
+            value={state.citizenship}
+            onChange={example}
+          />
+          <button type="submit">sumbit</button>
+        </form>
+      </div>
+    );
 }
 
 export default connect(store => ({people: store.cvData}) , {candidateData  , voterData})(Candidate);

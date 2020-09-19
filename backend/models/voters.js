@@ -13,7 +13,7 @@ const VoterSchema = new Schema({
     required: true
   },
   citizenship: {
-    type:string
+    type:String
   },
   date: {
     type: Date,
@@ -24,9 +24,11 @@ function validateVoter(candidate) {
     const schema = Joi.object().keys({
       name: Joi.string().min(3).required(),
       email: Joi.string().email().required(),
+      citizenship: Joi.string().required(),
     });
   
-    return schema.validate(candidate);
+  return schema.validate(candidate); 
+  
   }
 
 module.exports.Voter = mongoose.model('voter', VoterSchema)

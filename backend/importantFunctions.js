@@ -1,9 +1,9 @@
-// var str = "pankaj@gmail.com"
-// const index = str.indexOf("@");
-// const string = str.slice(0, index)
-// const a = (Math.floor((Math.random() * 100000) )).toString()
-// const final = string.concat(a)
-// console.log(final)
+var str = "pankaj@gmail.com"
+const index = str.indexOf("@");
+const string = str.slice(0, index)
+const a = (Math.floor((Math.random() * 100000) )).toString()
+const final = string.concat(a)
+console.log(final)
 
 
 var CryptoJS = require("crypto-js");

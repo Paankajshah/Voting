@@ -24,6 +24,7 @@ function validateCandidate(candidate) {
     const schema = Joi.object().keys({
       name: Joi.string().min(3).required(),
       email: Joi.string().email().required(),
+      citizenship:Joi.string().required()
     });
   
     return schema.validate(candidate);
