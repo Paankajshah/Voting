@@ -25,7 +25,7 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -40,6 +40,11 @@ class App extends Component {
     console.log(this.state);
 
     // const response = await contract.methods
+    //   .registerCandidate("0x82ef247050aba28c18f7a12f61dbe5bd9e494b88", "pankaj")
+    //   .send({ from: accounts[0] });
+    // console.log(response);
+
+    // const response = await contract.methods
     //   .voterRegister("0x82ef247050aba28c18f7a12f61dbe5bd9e494b88")
     //   .send({ from: accounts[0] });
     // console.log(response);
@@ -52,20 +57,29 @@ class App extends Component {
     //   .addVoter("0x82ef247050aba28c18f7a12f61dbe5bd9e494b88", "pankaj")
     //   .send({ from: accounts[0] });
     // console.log(response);
+    
+    try {
+  // const sVote = await contract.methods.result().send({ from: accounts[0] });
+  // console.log(sVote);
 
-
-
-    const data = await contract.methods.totalVoter.call().call();
-    console.log(data);
-    // Stores a given value, 5 by default.
-    //await contract.methods.set(500).send({ from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    //const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    // this.setState({ storageValue: response });
-  };
+  const sta = await contract.methods.state.call().call();
+  console.log(sta);
+  const data = await contract.methods.winner.call().call();
+  console.log(data);
+  // Stores a given value, 5 by default.
+  //await contract.methods.set(500).send({ from: accounts[0] });
+  
+  // Get the value from the contract to prove it worked.
+  //const response = await contract.methods.get().call();
+  
+  // Update state with the result.
+  // this.setState({ storageValue: response });
+  
+  } catch (err) {
+  console.log(err)
+  
+  }
+};
 
   render() {
     if (!this.state.web3) {
@@ -76,14 +90,9 @@ class App extends Component {
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <center>
+          <button onClick={this.runExample}>click</button>
+        </center>
       </div>
     );
   }
