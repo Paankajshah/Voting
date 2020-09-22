@@ -4,6 +4,7 @@ import getWeb3 from "../../getWeb3"
 import { voterData, candidateData } from "../../store/actions";
 import { connect } from "react-redux";
 import "./admin.css";
+import Forbidden from "../forbidden/forbidden";
 
 class Admin extends Component {
   state = {
@@ -12,6 +13,8 @@ class Admin extends Component {
     accounts: null,
     contract: null,
     voteStatus: null,
+    ballotAddress: "",
+    accountAddress:"",
   };
 
   componentDidMount = async () => {
@@ -30,8 +33,16 @@ class Admin extends Component {
         deployedNetwork && deployedNetwork.address
       );
       const sta = await instance.methods.state.call().call();
+      const add = await instance.methods.ballotOfficialAddress.call().call();
 
-      this.setState({ voteStatus: sta, web3, accounts, contract: instance });
+      this.setState({
+        voteStatus: sta,
+        web3,
+        accounts,
+        contract: instance,
+        ballotAddress: add,
+        accountAddress: accounts[0],
+      });
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +95,9 @@ class Admin extends Component {
 
   render() {
     console.log("inside admin", this.props.people.candidates);
+    let content;
 
+    
     let stats = <span>Not Known</span>;
     if (this.state.voteStatus === "0") {
       stats = <span>Not Started</span>;
@@ -109,15 +122,15 @@ class Admin extends Component {
           </tr>
         );
       })
-    ) : (
-      <p>nodaataaaa</p>
-    );
-    console.log(this.state);
-
-    const votData = this.props.people.voters.length ? (
-      this.props.people.voters.map((result) => {
-        return (
-          <tr key={result.date}>
+      ) : (
+        <p>nodaataaaa</p>
+        );
+        console.log(this.state);
+        
+        const votData = this.props.people.voters.length ? (
+          this.props.people.voters.map((result) => {
+            return (
+              <tr key={result.date}>
             <td>{result.name}</td>
             <td>{result.email}</td>
             <td>{result.citizenship}</td>
@@ -128,48 +141,62 @@ class Admin extends Component {
           </tr>
         );
       })
-    ) : (
-      <p>nodaataaaa</p>
-    );
-
+      ) : (
+        <p>nodaataaaa</p>
+        );
+        if (this.state.accountAddress === this.state.ballotAddress) {
+    
+          content =  <div>
+            <button onClick={this.startVote}>Start Vote</button>
+            <br />
+            <button onClick={this.endVote}>End Vote</button>
+            <br />
+            <button onClick={this.declareResult}>Declare Result</button>
+            <br />
+            <p>Ballot Address : {this.state.ballotAddress}</p>
+            {/* <p>Account Address : {this.state.accountAddress}</p> */}
+            <p>Total Voter ....</p>
+            <p>Total Candidate ...</p>
+            <p>Vote Status :: {stats} </p>
+            <h2>Candidate Table</h2>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Citizenship</th>
+                <th>Date</th>
+                <th>approve</th>
+              </tr>
+              {candData}
+            </table>
+            <br />
+            <br />
+            <br />
+            <h2>Voter Table</h2>
+    
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Citizenship</th>
+                <th>Date</th>
+                <th>approve</th>
+              </tr>
+              {votData}
+            </table>
+          </div>
+         
+        }
+        else {
+           return <Forbidden />;
+          
+        }
+        
     return (
       <div>
-        <button onClick={this.startVote}>Start Vote</button>
-        <br />
-        <button onClick={this.endVote}>End Vote</button>
-        <br />
-        <button onClick={this.declareResult}>Declare Result</button>
-        <br />
-        <p>Total Voter ....</p>
-        <p>Total Candidate ...</p>
-        <p>Vote Status :: {stats} </p>
-        <h2>Candidate Table</h2>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Citizenship</th>
-            <th>Date</th>
-            <th>approve</th>
-          </tr>
-          {candData}
-        </table>
-        <br />
-        <br />
-        <br />
-        <h2>Voter Table</h2>
-
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Citizenship</th>
-            <th>Date</th>
-            <th>approve</th>
-          </tr>
-          {votData}
-        </table>
-      </div>
+          {content}
+        </div>
+          
     );
   }
 }
