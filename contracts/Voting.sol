@@ -25,6 +25,7 @@ contract Voting {
    
     
     uint public totalVoter = 0;
+    uint public totalCandidate = 0;
     uint public totalVote = 0;
     address public ballotOfficialAddress;      
     string public ballotOfficialName;
@@ -75,6 +76,7 @@ contract Voting {
         m.candAddress=_candidate;
         candRegister[_candidate]=m;
         candidateAddress.push(_candidate);
+        totalCandidate++;
         
     }
     
