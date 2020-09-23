@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const Joi = require('joi')
 const accountSchema = new mongoose.Schema({
     account:{
         type: String,
@@ -11,4 +11,15 @@ const accountSchema = new mongoose.Schema({
     }
 })
 
-module.exports.candAccountSchema = mongoose.model('candAccount' , accountSchema)
+function validateAccount(candidate) {
+    const schema = Joi.object().keys({
+      account: Joi.string().required(),
+      id: Joi.string().required(),
+    });
+  
+    return schema.validate(candidate);
+  }
+
+module.exports.candAccountSchema = mongoose.model('candAccount', accountSchema)
+module.exports.validate = validateAccount;
+

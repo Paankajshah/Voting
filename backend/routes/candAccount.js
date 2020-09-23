@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { candAccountSchema } = require("../models/candAccount");
-const { Candidate, validate } = require("../models/candidate");
+const { candAccountSchema , validate } = require("../models/candAccount");
+const { Candidate } = require("../models/candidate");
 
 router.get("/candaccounts", async (req, res) => {
   const cand = await candAccountSchema
@@ -12,6 +12,8 @@ router.get("/candaccounts", async (req, res) => {
 });
 
 router.post("/candaccount", async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(200).send(error.details[0].message);
   let data = await Candidate.findById(req.body.id);
   var str = data.email;
   const index = str.indexOf("@");
@@ -34,5 +36,17 @@ router.post("/candaccount", async (req, res) => {
  
   res.send(finalData);
 });
+
+router.post("/oneaccount", async (req, res) => {
+  const cand = await candAccountSchema
+    .findOne({
+      details: { _id: req.body.id },
+    })
+    .select("account details")
+    .populate("details", "name email");
+    
+  res.send(cand);
+});
+
 
 module.exports = router;

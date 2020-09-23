@@ -4,6 +4,7 @@ import getWeb3 from "../../getWeb3"
 import { voterData, candidateData } from "../../store/actions";
 import { connect } from "react-redux";
 import "./admin.css";
+import axios from 'axios'
 import Forbidden from "../forbidden/forbidden";
 
 class Admin extends Component {
@@ -14,7 +15,9 @@ class Admin extends Component {
     contract: null,
     voteStatus: null,
     ballotAddress: "",
-    accountAddress:"",
+    accountAddress: "",
+    totalVoter: null,
+    totalCandidate:null
   };
 
   componentDidMount = async () => {
@@ -34,7 +37,8 @@ class Admin extends Component {
       );
       const sta = await instance.methods.state.call().call();
       const add = await instance.methods.ballotOfficialAddress.call().call();
-
+      const voter = await instance.methods.totalVoter.call().call();
+      const candidate = await instance.methods.totalCandidate.call().call();
       this.setState({
         voteStatus: sta,
         web3,
@@ -42,6 +46,8 @@ class Admin extends Component {
         contract: instance,
         ballotAddress: add,
         accountAddress: accounts[0],
+        totalVoter: voter,
+        totalCandidate:candidate,
       });
     } catch (error) {
       console.error(error);
@@ -80,7 +86,47 @@ class Admin extends Component {
        } catch (error) {
          console.log(" declare result  error", error)
        }
+  }
+  
+
+  addOnBlockchainCandidate = async (data) => {
+     console.log("result .... " , data)
+
+    const dataId = data._id;
+     const { accounts, contract, web3 } = this.state;
+
+    try {
+       const idResponse = await axios.post(
+         "http://localhost:5000/voting/oneaccount/" , { id : dataId}
+      );
+      
+      const candidateAccount = idResponse.data.account;
+      const candidateName = idResponse.data.details.name;
+      console.log(" add response ", candidateAccount , candidateName)
+      const response = await contract.methods
+      .registerCandidate(
+        candidateAccount,
+        candidateName
+        )
+        .send({ from: accounts[0] });
+        console.log("response on adding candidate on blockchain ", response);
+        
+      const moveResponse= await axios.post(
+          "http://localhost:5000/voting/candidatemove/",
+          { id: dataId }
+      );
+      
+      console.log("move response ", moveResponse)
+      window.location.reload(false);
+      
+        
+      //  await contract.methods.startVote().send({ from: accounts[0] });
+      //  window.location.reload(false);
+     } catch (error) {
+       console.log(" start vote error", error);
      }
+    
+  }
      
      
   approveCand = (data) => {
@@ -119,6 +165,9 @@ class Admin extends Component {
             <td>
               <button onClick={() => this.approveCand(result)}>approve</button>
             </td>
+            <td>
+              <button onClick={() => this.addOnBlockchainCandidate(result)}>Add</button>
+            </td>
           </tr>
         );
       })
@@ -138,6 +187,9 @@ class Admin extends Component {
             <td>
               <button>approve</button>
             </td>
+            <td>
+              <button>Add</button>
+            </td>
           </tr>
         );
       })
@@ -146,45 +198,49 @@ class Admin extends Component {
         );
         if (this.state.accountAddress === this.state.ballotAddress) {
     
-          content =  <div>
-            <button onClick={this.startVote}>Start Vote</button>
-            <br />
-            <button onClick={this.endVote}>End Vote</button>
-            <br />
-            <button onClick={this.declareResult}>Declare Result</button>
-            <br />
-            <p>Ballot Address : {this.state.ballotAddress}</p>
-            {/* <p>Account Address : {this.state.accountAddress}</p> */}
-            <p>Total Voter ....</p>
-            <p>Total Candidate ...</p>
-            <p>Vote Status :: {stats} </p>
-            <h2>Candidate Table</h2>
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Citizenship</th>
-                <th>Date</th>
-                <th>approve</th>
-              </tr>
-              {candData}
-            </table>
-            <br />
-            <br />
-            <br />
-            <h2>Voter Table</h2>
-    
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Citizenship</th>
-                <th>Date</th>
-                <th>approve</th>
-              </tr>
-              {votData}
-            </table>
-          </div>
+          content = (
+            <div>
+              <button onClick={this.startVote}>Start Vote</button>
+              <br />
+              <button onClick={this.endVote}>End Vote</button>
+              <br />
+              <button onClick={this.declareResult}>Declare Result</button>
+              <br />
+              <p>Ballot Address : {this.state.ballotAddress}</p>
+              {/* <p>Account Address : {this.state.accountAddress}</p> */}
+              <p>Total Voter  ::{this.state.totalVoter}</p>
+              <p>Total Candidate ::{this.state.totalCandidate}</p>
+              <p>Vote Status :: {stats} </p>
+              <h2>Candidate Table</h2>
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Citizenship</th>
+                  <th>Date</th>
+                  <th>approve</th>
+                  <th>Add on Network</th>
+                </tr>
+                {candData}
+              </table>
+              <br />
+              <br />
+              <br />
+              <h2>Voter Table</h2>
+
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Citizenship</th>
+                  <th>Date</th>
+                  <th>approve</th>
+                  <th>Add on Network</th>
+                </tr>
+                {votData}
+              </table>
+            </div>
+          );
          
         }
         else {

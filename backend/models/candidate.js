@@ -31,6 +31,7 @@ function validateCandidate(candidate) {
   }
 
 module.exports.Candidate = mongoose.model('candidate', CandidateSchema)
+module.exports.CandidateFinal = mongoose.model('CandidateFinal', CandidateSchema)
 module.exports.validate = validateCandidate
 
 

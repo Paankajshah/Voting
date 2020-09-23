@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { store } from "../../store";
+import { voterData, candidateData, addError } from "../../store/actions";
+
+
 import "./approveCandidate.css"
 class ApproveCandidate extends Component {
   state = {
@@ -34,9 +39,9 @@ class ApproveCandidate extends Component {
     }
    axios.post('http://localhost:5000/voting/candaccount/' , data)
          .then(res =>{
-    //         if (typeof(res.data) !== "object"){
-    //             store.dispatch(addError(res.data))
-    //           }
+            if (typeof(res.data) !== "object"){
+                store.dispatch(addError(res.data))
+              }
              console.log(res.data)
       })
          .catch(err=>{
@@ -71,4 +76,5 @@ class ApproveCandidate extends Component {
   }
 }
 
-export default ApproveCandidate;
+export default connect((store) => ({ error: store.error }))(ApproveCandidate);
+ 

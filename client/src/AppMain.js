@@ -8,7 +8,7 @@ import { voterData, candidateData } from "./store/actions";
 import landing from "./components/landing/landing";
 import Admin from "./components/admin/admin";
 import ErrorMessage from "./components/ErrorMessage";
-import ApproveCandidate from "./components/admin/approveCandidate";
+import ApproveCandidate from "./components/approveCandidate/approveCandidate";
 
 class App extends Component {
   state = {};
