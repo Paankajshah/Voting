@@ -32,4 +32,9 @@ function validateVoter(candidate) {
   }
 
 module.exports.Voter = mongoose.model('voter', VoterSchema)
+module.exports.VoterFinal = mongoose.model(
+  "voterFinal",
+  VoterSchema
+);
+
 module.exports.validate = validateVoter

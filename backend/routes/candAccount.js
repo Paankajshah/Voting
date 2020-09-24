@@ -6,8 +6,7 @@ const { Candidate } = require("../models/candidate");
 router.get("/candaccounts", async (req, res) => {
   const cand = await candAccountSchema
     .find()
-    .select("account details")
-    .populate("details", "name email");
+    
   res.send(cand);
 });
 
@@ -23,8 +22,13 @@ router.post("/candaccount", async (req, res) => {
 
 
   let postCand = new candAccountSchema({
+    citizenship:req.body.citizenship,
     account: req.body.account,
-    details: req.body.id,
+    details: {
+      name: data.name,
+      email: data.email,
+      citizenship:data.citizenship
+  }
   });
   postCand = await postCand.save();
   const finalData = {
@@ -37,15 +41,15 @@ router.post("/candaccount", async (req, res) => {
   res.send(finalData);
 });
 
-router.post("/oneaccount", async (req, res) => {
-  const cand = await candAccountSchema
+router.post("/onecandidate", async (req, res) => {
+  const candidate = await candAccountSchema
     .findOne({
-      details: { _id: req.body.id },
-    })
-    .select("account details")
-    .populate("details", "name email");
+        citizenship: req.body.citizenship,
     
-  res.send(cand);
+    })
+    console.log(candidate)
+    
+  res.send(candidate);
 });
 
 

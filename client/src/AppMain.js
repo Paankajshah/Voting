@@ -8,7 +8,9 @@ import { voterData, candidateData } from "./store/actions";
 import landing from "./components/landing/landing";
 import Admin from "./components/admin/admin";
 import ErrorMessage from "./components/ErrorMessage";
-import ApproveCandidate from "./components/approveCandidate/approveCandidate";
+import Approve from "./components/approve/approve";
+import ApproveVoter from "./components/approve/approvevoter";
+
 
 class App extends Component {
   state = {};
@@ -19,7 +21,8 @@ class App extends Component {
         <ErrorMessage />
         <Router>
           <Route path="/" exact component={landing} />
-          <Route path="/approvecand" component={ApproveCandidate} />
+          <Route path="/approve" component={Approve} />
+          <Route path="/approvevoter" component={ApproveVoter} />
           <Route path="/candidate" component={Candidate} />
           <Route path="/admin" component={Admin} />
           <Route path="/voter" component={voter} />

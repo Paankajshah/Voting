@@ -90,14 +90,15 @@ class Admin extends Component {
   
 
   addOnBlockchainCandidate = async (data) => {
-     console.log("result .... " , data)
+     console.log("agrument of addOnBlockchainCandidate function .... " , data)
 
+    const citizen = data.citizenship;
     const dataId = data._id;
      const { accounts, contract, web3 } = this.state;
 
     try {
        const idResponse = await axios.post(
-         "http://localhost:5000/voting/oneaccount/" , { id : dataId}
+         "http://localhost:5000/voting/onecandidate/" , { citizenship : citizen}
       );
       
       const candidateAccount = idResponse.data.account;
@@ -127,17 +128,71 @@ class Admin extends Component {
      }
     
   }
+
+  addOnBlockchainVoter = async (data) => {
+    console.log("agrument of addOnBlockchainVoter function .... ", data);
+
+    const citizen = data.citizenship;
+    const dataId = data._id;
+    const { accounts, contract, web3 } = this.state;
+
+    try {
+      const idResponse = await axios.post(
+        "http://localhost:5000/voting/onevoter/",
+        { citizenship: citizen }
+      );
+
+      const candidateAccount = idResponse.data.account;
+      const candidateName = idResponse.data.details.name;
+      console.log(" add response ", candidateAccount, candidateName);
+      const response = await contract.methods
+        .registerCandidate(candidateAccount, candidateName)
+        .send({ from: accounts[0] });
+      console.log("response on adding candidate on blockchain ", response);
+
+      const moveResponse = await axios.post(
+        "http://localhost:5000/voting/candidatemove/",
+        { id: dataId }
+      );
+
+      console.log("move response ", moveResponse);
+      window.location.reload(false);
+
+      //  await contract.methods.startVote().send({ from: accounts[0] });
+      //  window.location.reload(false);
+    } catch (error) {
+      console.log(" start vote error", error);
+    }
+    
+  }
      
      
-  approveCand = (data) => {
-    console.log("approveCand data ", data);
+  approveCandidate = (data) => {
+    const finalData = {
+      ...data,
+      mode:"candidate"
+    } 
 
     this.props.history.push({
-      pathname: "/approvecand",
+      pathname: "/approve",
       search: "?id=" + data._id,
-      state: data,
+      state: finalData,
     });
   };
+
+  approveVoter = (data) => {
+    const finalData = {
+      ...data,
+      mode:"voter"
+    }
+    this.props.history.push({
+      pathname: "/approvevoter",
+      search: "?id=" + data._id,
+      state: finalData,
+    });
+  }
+
+
 
   render() {
     console.log("inside admin", this.props.people.candidates);
@@ -163,7 +218,7 @@ class Admin extends Component {
             <td>{result.citizenship}</td>
             <td>{result.date}</td>
             <td>
-              <button onClick={() => this.approveCand(result)}>approve</button>
+              <button onClick={() => this.approveCandidate(result)}>approve</button>
             </td>
             <td>
               <button onClick={() => this.addOnBlockchainCandidate(result)}>Add</button>
@@ -180,18 +235,22 @@ class Admin extends Component {
           this.props.people.voters.map((result) => {
             return (
               <tr key={result.date}>
-            <td>{result.name}</td>
-            <td>{result.email}</td>
-            <td>{result.citizenship}</td>
-            <td>{result.date}</td>
-            <td>
-              <button>approve</button>
-            </td>
-            <td>
-              <button>Add</button>
-            </td>
-          </tr>
-        );
+                <td>{result.name}</td>
+                <td>{result.email}</td>
+                <td>{result.citizenship}</td>
+                <td>{result.date}</td>
+                <td>
+                  <button onClick={() => this.approveVoter(result)}>
+                    approve
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => this.addOnBlockchainVoter(result)}>
+                    Add
+                  </button>
+                </td>
+              </tr>
+            );
       })
       ) : (
         <p>nodaataaaa</p>

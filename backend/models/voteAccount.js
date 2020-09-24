@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const Joi = require('joi')
+const Joi = require("joi");
+
 const accountSchema = new mongoose.Schema({
   citizenship: {
     type: String,
@@ -20,17 +21,16 @@ const accountSchema = new mongoose.Schema({
     },
   },
 });
-
-function validateAccount(candidate) {
+function validateAccount(voter) {
     const schema = Joi.object().keys({
       citizenship: Joi.string().required(),
       account: Joi.string().required(),
       id: Joi.string().required(),
     });
   
-    return schema.validate(candidate);
+    return schema.validate(voter);
   }
+ 
 
-module.exports.candAccountSchema = mongoose.model('candAccount', accountSchema)
+module.exports.voteAccountSchema = mongoose.model('voteAccount' , accountSchema)
 module.exports.validate = validateAccount;
-

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
-const { Voter , validate} = require("../models/voters");
+const { Voter , validate , VoterFinal} = require("../models/voters");
 const { date } = require("joi");
 
 router.get("/voters", async (req, res) => {
@@ -23,6 +23,8 @@ router.post("/voter", async (req, res) => {
   res.send(postVoter);
 });
 
+
+
 router.get("/voter/:id", async (req, res) => {
   const voter = await Voter.findById(req.params.id);
 
@@ -31,6 +33,26 @@ router.get("/voter/:id", async (req, res) => {
 
   res.send(voter);
 });
+
+router.post("/votermove", async (req, res) => {
+  const voter = await Voter.findOne({ _id: req.body.id });
+
+  let postVoter = new VoterFinal({
+    name: voter.name,
+    email: voter.email,
+    citizenship: voter.citizenship,
+  });
+  voter.remove();
+  await postVoter.save();
+  res.send(postVoter);
+});
+router.get("/finalvoter", async (req, res) => {
+  const voter = await VoterFinal.find();
+  res.send(voter);
+});
+
+
+
 
 
 module.exports = router;
