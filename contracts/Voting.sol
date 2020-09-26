@@ -21,7 +21,7 @@ contract Voting {
         bool voted;
     }
     
-    address[] private candidateAddress; 
+    address[] public candidateAddress; 
    
     
     uint public totalVoter = 0;
