@@ -44,7 +44,7 @@ class ApproveVoter extends Component {
       id: this.state.result._id,
     };
     axios
-      .post("http://localhost:5000/voting/candaccount/", data)
+      .post("http://localhost:5000/voting/voteaccount/", data)
       .then((res) => {
         if (typeof res.data !== "object") {
           store.dispatch(addError(res.data));

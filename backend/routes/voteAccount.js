@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const { voteAccountSchema } = require("../models/voteAccount")
-const { Voter, validate } = require("../models/voters");
+const { voteAccountSchema , validate } = require("../models/voteAccount")
+const { Voter } = require("../models/voters");
 
 router.get("/voteaccounts" , async(req, res ) =>{
     const vote = await voteAccountSchema

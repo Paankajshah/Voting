@@ -146,12 +146,12 @@ class Admin extends Component {
       const candidateName = idResponse.data.details.name;
       console.log(" add response ", candidateAccount, candidateName);
       const response = await contract.methods
-        .registerCandidate(candidateAccount, candidateName)
+        .addVoter(candidateAccount, candidateName)
         .send({ from: accounts[0] });
       console.log("response on adding candidate on blockchain ", response);
 
       const moveResponse = await axios.post(
-        "http://localhost:5000/voting/candidatemove/",
+        "http://localhost:5000/voting/votermove/",
         { id: dataId }
       );
 
