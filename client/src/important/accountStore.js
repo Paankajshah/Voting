@@ -15,3 +15,11 @@ export const accountsForVoter = [
   "0x7790279167939e86558be5f6f4f8d92a9f8bef18",
   "0xbdbf13f29c6cad8d09c05606a73c61db8de9fe1e",
 ];
+export const accountsForVoterCopy = [
+  "0xd4f1480566fc9733a32c4f231b2a96fbc903e228",
+  "0xd700aa272bd032af40e7f0119b9032d91514d508",
+  "0x0d36f9feb25035773700e87767cc48a037263a58",
+  "0x1e779f47f53d4a42712cd487debabd7b6aac82de",
+  "0x7790279167939e86558be5f6f4f8d92a9f8bef18",
+  "0xbdbf13f29c6cad8d09c05606a73c61db8de9fe1e",
+];
