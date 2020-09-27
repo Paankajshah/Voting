@@ -35,8 +35,6 @@ class ApproveCandidate extends Component {
   submit = (e) => {
     e.preventDefault();
     console.log("inside submit mode", this.state.mode);
-
-   // if (this.state.mode === "voter") {
       const data = {
         citizenship:this.state.result.citizenship,
         account: this.state.account,
@@ -53,26 +51,6 @@ class ApproveCandidate extends Component {
         .catch((err) => {
           console.log(err.message);
         });
-  //  }
-      // if (this.state.mode === "candidate") {
-      //   const data = {
-      //     citizenship: this.state.result.citizenship,
-      //     account: this.state.account,
-      //     id: this.state.result._id,
-      //   };
-      //   axios
-      //     .post("http://localhost:5000/voting/candaccount/", data)
-      //     .then((res) => {
-      //       if (typeof res.data !== "object") {
-      //         store.dispatch(addError(res.data));
-      //       }
-      //       console.log(res.data);
-      //       console.log("hello")
-      //     })
-      //     .catch((err) => {
-      //       console.log(err.message);
-      //     });
-      // }
       this.props.history.goBack();
   };
   render() {

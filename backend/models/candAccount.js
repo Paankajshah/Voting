@@ -18,6 +18,9 @@ const accountSchema = new mongoose.Schema({
     citizenship: {
       type: String,
     },
+    party: {
+      type: String,
+    }
   },
 });
 

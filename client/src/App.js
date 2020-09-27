@@ -63,13 +63,16 @@ class App extends Component {
       // console.log(voter)
       // const candidate = await contract.methods.totalCandidate.call().call();
       // console.log(candidate)
-      for (let i = 0; i <= 3; i++){
-
-        const data = await contract.methods.candidateAddress(i).call()
-        const dataa = await contract.methods.candRegister(data).call()
-        console.log((dataa.name))
-        console.log(dataa.candAddress)
-        console.log(dataa.votes)
+      for (let i = 1; i <= accountsForCandidate.length; i++) {
+        const response = await contract.methods
+          .registerCandidate(
+            accountsForCandidate[i - 1],
+            `candidate${i}`,
+            `citizenship${i}`,
+            `party${i}`
+          )
+          .send({ from: accounts[0] });
+          console.log(response);
       }
 
       // for (let i = 1; i <= accountsForVoter.length; i++)

@@ -7,6 +7,8 @@ contract Voting {
     struct candidate{
         string name;
         address candAddress;
+        string citizenship;
+        string party;
         uint votes;
         
     }
@@ -69,11 +71,13 @@ contract Voting {
     
     //add candidate
     
-     function registerCandidate(address _candidate, string memory _name) onlyOfficial public inState(State.Created) {
+     function registerCandidate(address _candidate, string memory _name , string memory _citizenship , string memory _party) onlyOfficial public inState(State.Created) {
         
         candidate memory m;
         m.name= _name;
         m.candAddress=_candidate;
+        m.citizenship=_citizenship;
+        m.party=_party;
         candRegister[_candidate]=m;
         candidateAddress.push(_candidate);
         totalCandidate++;

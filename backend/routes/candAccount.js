@@ -27,7 +27,8 @@ router.post("/candaccount", async (req, res) => {
     details: {
       name: data.name,
       email: data.email,
-      citizenship:data.citizenship
+      citizenship: data.citizenship,
+      party:data.party,
   }
   });
   postCand = await postCand.save();

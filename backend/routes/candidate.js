@@ -15,7 +15,8 @@ router.post("/candidate", async (req, res) => {
   let postCandidate = new Candidate({
     name: req.body.name,
     email: req.body.email,
-    citizenship:req.body.citizenship
+    citizenship: req.body.citizenship,
+    party:req.body.party,
   });
 
   postCandidate = await postCandidate.save();
@@ -38,6 +39,7 @@ router.post("/candidatemove", async (req, res) => {
      name: candidate.name,
      email: candidate.email,
      citizenship: candidate.citizenship,
+     party:candidate.party,
    });
     candidate.remove()
    await postCandidate.save()

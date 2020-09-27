@@ -94,6 +94,7 @@ class Admin extends Component {
 
     const citizen = data.citizenship;
     const dataId = data._id;
+    const tempParty = data.party;
      const { accounts, contract, web3 } = this.state;
 
     try {
@@ -107,7 +108,9 @@ class Admin extends Component {
       const response = await contract.methods
       .registerCandidate(
         candidateAccount,
-        candidateName
+        candidateName,
+        citizen,
+        tempParty
         )
         .send({ from: accounts[0] });
         console.log("response on adding candidate on blockchain ", response);
@@ -216,6 +219,7 @@ class Admin extends Component {
             <td>{result.name}</td>
             <td>{result.email}</td>
             <td>{result.citizenship}</td>
+            <td>{result.party}</td>
             <td>{result.date}</td>
             <td>
               <button onClick={() => this.approveCandidate(result)}>approve</button>
@@ -276,6 +280,7 @@ class Admin extends Component {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Citizenship</th>
+                  <th>Party</th>
                   <th>Date</th>
                   <th>approve</th>
                   <th>Add on Network</th>

@@ -15,6 +15,9 @@ const CandidateSchema = new Schema({
   citizenship: {
     type:String
   },
+  party: {
+    type:String
+  },
   date: {
     type: Date,
     default: Date.now
@@ -24,7 +27,8 @@ function validateCandidate(candidate) {
     const schema = Joi.object().keys({
       name: Joi.string().min(3).required(),
       email: Joi.string().email().required(),
-      citizenship:Joi.string().required()
+      citizenship:Joi.string().required(),
+      party:Joi.string().required()
     });
   
     return schema.validate(candidate);

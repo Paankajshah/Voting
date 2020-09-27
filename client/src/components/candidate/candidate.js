@@ -6,9 +6,11 @@ import { voterData, candidateData , addError } from "../../store/actions";
 
 function Candidate(props) {
     const [state , setState] = useState({
-        name:"",
-        email: "",
-        citizenship:""
+      name:"",
+      email: "",
+      citizenship: "",
+      party: "",
+        
     });
 
     useEffect(()=>{
@@ -30,10 +32,11 @@ function Candidate(props) {
 
         console.log(state)
         const data = {
-            "name": state.name,
-            "email": state.email,
-            "citizenship":state.citizenship
-        }
+          name: state.name,
+          email: state.email,
+          citizenship: state.citizenship,
+          party: state.party,
+        };
         console.log(data)
         axios.post('http://localhost:5000/voting/candidate/' , data)
             .then(res =>{
@@ -75,6 +78,13 @@ function Candidate(props) {
             className="citizen"
             name="citizenship"
             value={state.citizenship}
+            onChange={example}
+          />
+          <label htmlFor="party">Party</label>
+          <input
+            className="party"
+            name="party"
+            value={state.party}
             onChange={example}
           />
           <button type="submit">sumbit</button>
