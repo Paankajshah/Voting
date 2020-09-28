@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const { candidate, candAccount, voteAccount, voter } = require("./routes");
+const { users ,candidate, candAccount, voteAccount, voter } = require("./routes");
 const app = express();
 
 app.use(cors());
@@ -16,7 +16,7 @@ mongoose
 
 app.use(express.json());
 
-app.use("/voting", candidate, voter, candAccount, voteAccount);
+app.use("/voting",users, candidate, voter, candAccount, voteAccount);
 
 const port = 5000;
 

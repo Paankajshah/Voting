@@ -53,6 +53,7 @@ router.post("/candaccount", async (req, res) => {
     account: postCand.account,
     name: data.name,
     email: data.email,
+    password:password,
   };
  
   res.send(finalData);
