@@ -1,16 +1,13 @@
 import {addError , removeError} from './error';
 import { SET_CURRENT_USER } from "../actionTypes";
 import api  from "../../services/api";
+import decode from "jwt-decode";
 
 export const setCurrentUser = user =>({
     type: SET_CURRENT_USER,
     user
 });
 
-
-export const setToken = token =>{
-    api.setToken(token);
-};
 
 export const logout = ()=> {
     return async dispatch =>{
@@ -29,7 +26,8 @@ export const login  = (data) =>{
         
         try {
             const token = await api.login(data);
-            console.log("login token" ,token)
+            console.log(decode(token));
+            console.log("loginToken" ,token)
             //          console.log('details is ' , user);
            // localStorage.setItem('jwtToken' , token);
            // api.setToken(token);

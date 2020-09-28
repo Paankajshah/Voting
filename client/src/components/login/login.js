@@ -15,10 +15,12 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentDidUpdate() {
+  componentDidMount() {
     console.log("login props", this.props);
-    if (this.props.auth.isAuthenticated)
+    if (this.props.auth.isAuthenticated) {
+      
       return this.props.history.push("/castvote");
+    }
   }
 
   onChange(e) {
@@ -32,6 +34,7 @@ class Login extends Component {
       password: this.state.password,
     };
     this.props.login(user);
+    this.props.history.push("/otppage")
   }
 
   handleRegister = () => {

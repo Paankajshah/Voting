@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import VotingContract from "../../contracts/Voting.json";
 import getWeb3 from "../../getWeb3";
+import { store } from "../../store";
+import { setCurrentUser, addError, removeError } from "../../store/actions";
+
 
 class CastVote extends Component {
   state = {
@@ -90,6 +93,14 @@ class CastVote extends Component {
     }
   };
 
+  logoutHandler =()=> {
+    localStorage.clear();
+    this.props.history.push("/");
+    store.dispatch(setCurrentUser({}));
+    store.dispatch(removeError());
+
+  }
+
   render() {
     console.log(this.state.candidates.length !== 0);
 
@@ -121,6 +132,7 @@ class CastVote extends Component {
     return (
       <div>
         <button onClick={this.runExample}>click</button>
+        <button onClick={this.logoutHandler}>Logout</button>
         <div className="container">
           <div className="row">
             
