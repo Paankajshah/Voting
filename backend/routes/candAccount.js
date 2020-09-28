@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { candAccountSchema , validate } = require("../models/candAccount");
+const { User } = require("../models/users");
 const { Candidate } = require("../models/candidate");
+var generatePassword = require("password-generator");
+const bcrypt = require("bcrypt");
 
 router.get("/candaccounts", async (req, res) => {
   const cand = await candAccountSchema
@@ -19,7 +22,20 @@ router.post("/candaccount", async (req, res) => {
   const string = str.slice(0, index);
   const a = Math.floor(Math.random() * 100000).toString();
   const final = string.concat(a);
+  const password = generatePassword(8);
+  let passOriginal = password;
+  bcrypt.hash(password, 10, async (err, hash) => {
+  
+  let user = new User({
+    name: data.name,
+    username: final,
+    email: data.email,
+    password: hash,
+  });
+  user = await user.save();
 
+  console.log("user", user);
+});
 
   let postCand = new candAccountSchema({
     citizenship:req.body.citizenship,
