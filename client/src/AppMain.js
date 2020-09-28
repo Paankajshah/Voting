@@ -10,6 +10,7 @@ import Admin from "./components/admin/admin";
 import ErrorMessage from "./components/ErrorMessage";
 import Approve from "./components/approve/approve";
 import ApproveVoter from "./components/approve/ApproveVoter";
+import login from "./components/login/login"
 
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
         <Router>
           <Route path="/" exact component={landing} />
           <Route path="/approve" component={Approve} />
+          <Route path="/login" component={login} />
           <Route path="/approvevoter" component={ApproveVoter} />
           <Route path="/candidate" component={Candidate} />
           <Route path="/admin" component={Admin} />
