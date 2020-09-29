@@ -3,6 +3,7 @@ import axios from 'axios'
 import {connect } from 'react-redux';
 import { store } from '../../store';
 import { voterData, candidateData , addError } from "../../store/actions";
+import FileUpload from './FileUpload';
 
 function Candidate(props) {
     const [state , setState] = useState({
@@ -12,24 +13,28 @@ function Candidate(props) {
       party: "",
         
     });
+  
+  const [imageName , setImageName] = useState("")
 
     useEffect(()=>{
       // console.log("inside cand1" , props.people.candidates)
        
-       props.candidateData();
+     //  props.candidateData();
       // console.log("inside cand2" , props.people.candidates)
 
     },[]);
     const example=(e)=>{
         setState({
             ...state,
-            [e.target.name]:e.target.value})
+          [e.target.name]: e.target.value
+        })
+      if (e.target.name === "citizenship") {
+        setImageName(e.target.value)
+      }
     }
     function submit(e){
         e.preventDefault();
        console.log(props)
-
-
         console.log(state)
         const data = {
           name: state.name,
@@ -57,7 +62,7 @@ function Candidate(props) {
 
     }
     return (
-      <div>
+      <div >
         <form onSubmit={submit}>
           <label htmlFor="name">Name</label>
           <input
@@ -87,6 +92,11 @@ function Candidate(props) {
             value={state.party}
             onChange={example}
           />
+          <br />
+          <div style={{ height: "200px", width: "500px" }}>
+            <FileUpload name={imageName}/>
+          </div>
+            
           <button type="submit">sumbit</button>
         </form>
       </div>

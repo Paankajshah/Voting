@@ -107,12 +107,13 @@ class CastVote extends Component {
     const cards =
       this.state.candidates.length !== 0 ? (
         this.state.candidates.map((candidate) => {
+          const image = `uploads/${candidate.citizenship}.jpg`
           return (
             <div className="col-sm" style={{ marginBottom: "20px" }}>
               <div className="card" style={{ width: "18rem" }}>
                 <img
                   className="card-img-top"
-                  src="https://previews.123rf.com/images/pandavector/pandavector1610/pandavector161003382/64198134-boy-icon-outline-single-avatar-people-icon-from-the-big-avatar-outline-.jpg"
+                  src={image}
                   alt="Card image cap"
                   width="100px"
                   height="100px"

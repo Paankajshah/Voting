@@ -2,10 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const uploads = require("./uploads/uploads")
+
 
 const { users ,candidate, candAccount, voteAccount, voter } = require("./routes");
+const fileUpload = require("express-fileupload");
 const app = express();
-
+app.use(fileUpload());
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -16,7 +19,7 @@ mongoose
 
 app.use(express.json());
 
-app.use("/voting",users, candidate, voter, candAccount, voteAccount);
+app.use("/voting", uploads, users, candidate, voter, candAccount, voteAccount);
 
 const port = 5000;
 
