@@ -159,7 +159,8 @@ class Admin extends Component {
       );
 
       console.log("move response ", moveResponse);
-      window.location.reload(false);
+      // window.location.reload(false);
+      this.forceUpdate();
 
       //  await contract.methods.startVote().send({ from: accounts[0] });
       //  window.location.reload(false);

@@ -49,14 +49,14 @@ class CastVote extends Component {
   };
 
   runExample = async () => {
-    const { accounts, contract, web3, candidates } = this.state;
+    const { accounts, contract, web3, candidates , totalCandidate} = this.state;
     console.log(this.state);
     try {
       // const voter = await contract.methods.totalVoter.call().call();
       // console.log(voter)
       // const candidate = await contract.methods.totalCandidate.call().call();
       // console.log(candidate)
-      for (let i = 0; i <= 3; i++) {
+      for (let i = 0; i <= totalCandidate-1; i++) {
         const data = await contract.methods.candidateAddress(i).call();
         const dataa = await contract.methods.candRegister(data).call();
         candidates.push(dataa);
@@ -93,6 +93,15 @@ class CastVote extends Component {
     }
   };
 
+  voteHandler = async (address) => {
+    const { accounts, contract, web3, candidates, totalCandidate } = this.state;
+
+
+    const response = await contract.methods
+   .castVote(address)
+   .send({ from: accounts[0] });
+    console.log(response);
+  }
   logoutHandler =()=> {
     localStorage.clear();
     this.props.history.push("/");
@@ -121,7 +130,7 @@ class CastVote extends Component {
                 <div className="card-body">
                   <p className="card-text">{candidate.name}</p>
                   <p className="card-text">{candidate.party}</p>
-                  <button onClick={()=> alert(candidate.candAddress)}>alert</button>
+                  <button onClick={()=> this.voteHandler(candidate.candAddress)}>Vote</button>
                 </div>
               </div>
             </div>

@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router();
 const { voteAccountSchema , validate } = require("../models/voteAccount")
 const { Voter } = require("../models/voters");
+var generatePassword = require("password-generator");
+const bcrypt = require("bcrypt");
+const { User } = require("../models/users");
 
 router.get("/voteaccounts" , async(req, res ) =>{
     const vote = await voteAccountSchema
@@ -20,6 +23,19 @@ router.post("/voteaccount" , async(req , res ) =>{
    const string = str.slice(0, index);
    const a = Math.floor(Math.random() * 100000).toString();
    const final = string.concat(a);
+  const password = generatePassword(8);
+  let passOriginal = password;
+ bcrypt.hash(password, 10, async (err, hash) => {
+   let user = new User({
+     name: data.name,
+     username: final,
+     email: data.email,
+     password: hash,
+   });
+   user = await user.save();
+
+   console.log("user", user);
+ });
 
   let postVoter = new voteAccountSchema({
      citizenship:data.citizenship,
@@ -36,6 +52,7 @@ router.post("/voteaccount" , async(req , res ) =>{
      account: postVoter.account,
      name: data.name,
      email: data.email,
+     password: password,
    };
 
    res.send(finalData);
