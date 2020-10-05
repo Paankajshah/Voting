@@ -62,42 +62,58 @@ function Candidate(props) {
 
     }
     return (
-      <div >
-        <form onSubmit={submit}>
-          <label htmlFor="name">Name</label>
-          <input
-            className="name"
-            name="name"
-            value={state.name}
-            onChange={example}
-          />
-          <label htmlFor="email">email</label>
-          <input
-            className="email"
-            name="email"
-            value={state.email}
-            onChange={example}
-          />
-          <label htmlFor="citizenship">citizenship</label>
-          <input
-            className="citizen"
-            name="citizenship"
-            value={state.citizenship}
-            onChange={example}
-          />
-          <label htmlFor="party">Party</label>
-          <input
-            className="party"
-            name="party"
-            value={state.party}
-            onChange={example}
-          />
-          <br />
-          <div style={{ height: "200px", width: "500px" }}>
-            <FileUpload name={imageName}/>
+      <div>
+        <form onSubmit={submit} style={{ margin: "50px 50px 50px 50px" }}>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                value={state.name}
+                onChange={example}
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={state.email}
+                onChange={example}
+              />
+            </div>
           </div>
-            
-          <button type="submit">sumbit</button>
+
+          <div className="form-group">
+            <label for="citizenship">Citizenship</label>
+            <input
+              type="text"
+              className="form-control"
+              name="citizenship"
+              value={state.citizenship}
+              onChange={example}
+            />
+          </div>
+          <div className="form-group">
+            <label for="party">Party</label>
+            <input
+              type="text"
+              className="form-control"
+              name="party"
+              value={state.party}
+              onChange={example}
+            />
+          </div>
+          <div>
+            <FileUpload name={imageName} />
+          </div>
+
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
         </form>
       </div>
     );

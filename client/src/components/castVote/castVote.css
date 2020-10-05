@@ -1,0 +1,76 @@
+.contaiiner {
+  height: calc(100vh - 20px);
+  width: calc(100vw - 10px);
+  margin: auto;
+  background-color: rgb(241, 252, 222);
+}
+.header {
+  height: 50px;
+  width: 100%;
+  border-radius: 20px;
+
+  background-image: linear-gradient(to right, rgb(227, 148, 186), lightblue);
+}
+.logout {
+  float: right;
+  margin-top: 8px;
+  margin-right: 10px;
+}
+.voting-info {
+  width: 29%;
+  height: calc(100vh - 20px - 50px);
+  border-radius: 20px;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgb(156, 152, 153),
+    rgb(199, 193, 194)
+  );
+  float: left;
+}
+.voting-area {
+  width: 70%;
+  height: calc(100vh - 20px - 50px);
+  background-color: rgb(112, 107, 108);
+  border-radius: 20px;
+  float: right;
+  overflow: scroll;
+  position: relative;
+}
+.vote-active-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.arrow-div{
+  display: inline-block;
+  float: left;
+}
+.arrow{
+  margin-top:15px;
+  font-size: larger;
+  color: blue;
+}
+
+.arrow:hover{
+  cursor: pointer;
+}
+.voting-section{
+  display: inline-block;
+  float: left;
+  width: 80%;
+  height: 100%;
+  text-align: center;
+} 
+.marquee {
+  font-size: 30px;
+    white-space: nowrap;
+    -webkit-animation: rightThenLeft 4s linear;
+}
+
+
+@-webkit-keyframes rightThenLeft {
+    0%   {left: 0%;}
+    50%  {right: 0%;}
+    100% {left: 0%;}
+} 

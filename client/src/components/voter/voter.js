@@ -34,29 +34,40 @@ function Voter() {
   };
   return (
     <div>
-      <form onSubmit={submit}>
-        <label htmlFor="name">Name</label>
-        <input
-          className="name"
-          name="name"
-          value={state.name}
-          onChange={example}
-        />
-        <label htmlFor="email">email</label>
-        <input
-          className="email"
-          name="email"
-          value={state.email}
-          onChange={example}
-        />
-        <label htmlFor="citizenship">citizenship</label>
-        <input
-          className="citizen"
-          name="citizenship"
-          value={state.citizenship}
-          onChange={example}
-        />
-        <button type="submit">sumbit</button>
+      <form onSubmit={submit} style={{ margin: "50px 50px 50px 50px" }}>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            value={state.name}
+            onChange={example}
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            value={state.email}
+            onChange={example}
+          />
+        </div>
+        <div class="form-group">
+          <label for="citizenship">Citizenship</label>
+          <input
+            type="text"
+            class="form-control"
+            name="citizenship"
+            value={state.citizenship}
+            onChange={example}
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
       </form>
     </div>
   );
