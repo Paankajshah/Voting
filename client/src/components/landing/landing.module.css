@@ -1,0 +1,90 @@
+.container {
+}
+.link {
+  color: blue;
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
+  margin-top:15px;
+}
+.link:hover{
+  cursor: pointer;
+}
+.header {
+  background-color: rgb(168, 113, 50);
+  height: 50px;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.intro {
+  height: calc(100vh - 50px);
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(83, 143, 91);
+  background: linear-gradient(to bottom, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  text-align: center;
+  padding-top: 60px;
+  font-size: 60px;
+}
+
+.buttons {
+  height: calc(100vh - 20vh);
+  width: 100%;
+  background: linear-gradient(to bottom, #23d5ab, #4a3d2d, #38342f, black);
+  display: flex;               
+  flex-direction: row;          
+  flex-wrap: nowrap;              
+  justify-content: space-evenly; 
+}
+
+.contact {
+  height: 60vh;
+  width: 100%;
+  background-color: black;
+  text-align: center;
+  font-size: 100px;
+  padding-top: 20vh;
+}
+
+.candidate{
+background-color: #b3b084;
+height: 300px;
+width: 300px;
+border-radius: 25px;
+text-align: center;
+padding-top:80px;
+font-size: 30px;
+
+}
+.voter{
+  background-color: #b3b084;
+  height: 300px;
+  width: 300px;
+  border-radius: 25px;
+  text-align: center;
+  padding-top:80px;
+  font-size: 30px;
+  
+}
+.cast{
+  background-color: #b3b084;
+  height: 300px;
+  width: 300px;
+  border-radius: 25px;
+  text-align: center;
+  padding-top:80px;
+  font-size: 30px;
+  
+
+}
+
+.candidate:hover{
+  cursor: pointer;
+}
+.voter:hover{
+  cursor: pointer;
+} 
+.cast:hover{
+  cursor: pointer;
+}
