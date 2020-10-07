@@ -31,16 +31,19 @@
 .buttons {
   height: calc(100vh - 20vh);
   width: 100%;
+  /* background: linear-gradient(-35deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+  /* background: linear-gradient(35deg, #23d5ab , #23a6d5,  #e73c7e , #ee7752) */
   background: linear-gradient(to bottom, #23d5ab, #4a3d2d, #38342f, black);
-  display: flex;               
-  flex-direction: row;          
-  flex-wrap: nowrap;              
-  justify-content: space-evenly; 
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-evenly; /* switched from default (flex-start, see below) */
 }
 
 .contact {
   height: 60vh;
   width: 100%;
+  /* background: linear-gradient(-35deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background-color: black;
   text-align: center;
   font-size: 100px;

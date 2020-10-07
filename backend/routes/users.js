@@ -64,7 +64,7 @@ users.post("/login", (req, res) => {
             let info = await transporter.sendMail({
               from: "'Voting' <vascode7@gmail.com>", // sender address
               to: user.email, // list of receivers
-              subject: "Credentials", // Subject line
+              subject: "Verify", // Subject line
               html: `<div>
               <div style="text-align:center;">
               <h1 style="color:grey;"> Hi!! ${user.name}</h1>

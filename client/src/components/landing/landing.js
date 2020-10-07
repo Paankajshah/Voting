@@ -27,6 +27,19 @@ function Header() {
       <div className={classes.link}>
         <Link
           activeClass="active"
+          to="contact"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={800}
+        >
+          Contact Us
+        </Link>
+      </div>
+
+      <div className={classes.link}>
+        <Link
+          activeClass="active"
           to="buttons"
           spy={true}
           smooth={true}
@@ -82,7 +95,11 @@ function Intro() {
 }
 
 function Contact() {
-  return <div className={classes.contact}>We are developers</div>;
+  return (
+    <div id="contact" className={classes.contact}>
+      We are developers
+    </div>
+  );
 }
 const Landing = (props) => {
   return (

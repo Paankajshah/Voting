@@ -3,12 +3,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { store } from "../../store";
 import { voterData, candidateData, addError } from "../../store/actions";
-import { withRouter } from 'react-router-dom';
-import { createBrowserHistory } from "history";
 
 import "./approve.css";
 
-const history = createBrowserHistory();
 
 class ApproveCandidate extends Component {
   state = {
@@ -58,7 +55,7 @@ class ApproveCandidate extends Component {
           console.log(err.message);
         });
    
-      history.push("/admin");
+      this.props.history.push("/admin");
   };
   render() {
     return (

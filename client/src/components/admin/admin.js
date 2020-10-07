@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useRef, Component } from "react";
-import VotingContract from "../../contracts/Voting.json"
-import getWeb3 from "../../getWeb3"
+import VotingContract from "../../contracts/Voting.json";
+import getWeb3 from "../../getWeb3";
 import { voterData, candidateData } from "../../store/actions";
 import { connect } from "react-redux";
-import "./admin.css";
-import axios from 'axios'
+import classes from "./admin.module.css";
+import axios from "axios";
 import Forbidden from "../forbidden/forbidden";
+import { Link, animateScroll as scroll } from "react-scroll";
+
+function Header() {
+  return (
+    <div className={classes.header}>
+      <p>Admin Panel</p>
+    </div>
+  );
+}
 
 class Admin extends Component {
   state = {
@@ -22,6 +31,9 @@ class Admin extends Component {
 
   componentDidMount = async () => {
     try {
+      document.getElementById("dashboardOption").style.backgroundColor =
+        "lightblue";
+
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
@@ -56,41 +68,6 @@ class Admin extends Component {
     this.props.voterData();
   };
 
-  componentDidUpdate = async () => {
-    try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      const deployedNetwork = VotingContract.networks[networkId];
-      const instance = new web3.eth.Contract(
-        VotingContract.abi,
-        deployedNetwork && deployedNetwork.address
-      );
-      const sta = await instance.methods.state.call().call();
-      const add = await instance.methods.ballotOfficialAddress.call().call();
-      const voter = await instance.methods.totalVoter.call().call();
-      const candidate = await instance.methods.totalCandidate.call().call();
-      this.setState({
-        voteStatus: sta,
-        web3,
-        accounts,
-        contract: instance,
-        ballotAddress: add,
-        accountAddress: accounts[0],
-        totalVoter: voter,
-        totalCandidate: candidate,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    this.props.candidateData();
-    this.props.voterData();
-  };
   startVote = async () => {
     const { accounts, contract, web3 } = this.state;
 
@@ -185,8 +162,7 @@ class Admin extends Component {
       );
 
       console.log("move response ", moveResponse);
-      // window.location.reload(false);
-      this.forceUpdate();
+      window.location.reload(false);
 
       //  await contract.methods.startVote().send({ from: accounts[0] });
       //  window.location.reload(false);
@@ -219,7 +195,25 @@ class Admin extends Component {
       state: finalData,
     });
   };
-
+  toTables = () => {
+    scroll.scrollTo(1250);
+    document.getElementById("tableList").style.backgroundColor = "lightblue";
+    document.getElementById("dashboardOption").style.backgroundColor = "white";
+    document.getElementById("actionButton").style.backgroundColor = "white";
+  };
+  toActions = () => {
+    scroll.scrollTo(600);
+    document.getElementById("tableList").style.backgroundColor = "white";
+    document.getElementById("dashboardOption").style.backgroundColor = "white";
+    document.getElementById("actionButton").style.backgroundColor = "lightblue";
+  };
+  toDashboard = () => {
+    scroll.scrollTo(0);
+    document.getElementById("tableList").style.backgroundColor = "white";
+    document.getElementById("dashboardOption").style.backgroundColor =
+      "lightblue";
+    document.getElementById("actionButton").style.backgroundColor = "white";
+  };
   render() {
     console.log("inside admin", this.props.people.candidates);
     let content;
@@ -285,54 +279,89 @@ class Admin extends Component {
     );
     if (this.state.accountAddress === this.state.ballotAddress) {
       content = (
-        <div>
-          <button onClick={this.startVote}>Start Vote</button>
-          <br />
-          <button onClick={this.endVote}>End Vote</button>
-          <br />
-          <button onClick={this.declareResult}>Declare Result</button>
-          <br />
-          <p>Ballot Address : {this.state.ballotAddress}</p>
-          {/* <p>Account Address : {this.state.accountAddress}</p> */}
-          <p>Total Voter ::{this.state.totalVoter}</p>
-          <p>Total Candidate ::{this.state.totalCandidate}</p>
-          <p>Vote Status :: {stats} </p>
-          <h2>Candidate Table</h2>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Citizenship</th>
-              <th>Party</th>
-              <th>Date</th>
-              <th>approve</th>
-              <th>Add on Network</th>
-            </tr>
-            {candData}
-          </table>
-          <br />
-          <br />
-          <br />
-          <h2>Voter Table</h2>
+        <div className={classes.content}>
+          <div id="dashboard" className={classes.dashboard}>
+            <p>Ballot Address : {this.state.ballotAddress}</p>
+            {/* <p>Account Address : {this.state.accountAddress}</p> */}
+            <p>Total Voter ::{this.state.totalVoter}</p>
+            <p>Total Candidate ::{this.state.totalCandidate}</p>
+            <p>Vote Status :: {stats} </p>
+          </div>
+          <div id="actions" className={classes.actions}>
+            <button onClick={this.startVote}>Start Vote</button>
+            <br />
+            <button onClick={this.endVote}>End Vote</button>
+            <br />
+            <button onClick={this.declareResult}>Declare Result</button>
+            <br />
+          </div>
 
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Citizenship</th>
-              <th>Date</th>
-              <th>approve</th>
-              <th>Add on Network</th>
-            </tr>
-            {votData}
-          </table>
+          <div id="tables" className={classes.tables}>
+            <h2>Candidate Table</h2>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Citizenship</th>
+                <th>Party</th>
+                <th>Date</th>
+                <th>approve</th>
+                <th>Add on Network</th>
+              </tr>
+              {candData}
+            </table>
+            <br />
+            <br />
+            <br />
+            <h2>Voter Table</h2>
+
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Citizenship</th>
+                <th>Date</th>
+                <th>approve</th>
+                <th>Add on Network</th>
+              </tr>
+              {votData}
+            </table>
+          </div>
         </div>
       );
     } else {
       return <Forbidden />;
     }
 
-    return <div>{content}</div>;
+    return (
+      <div className={classes.container}>
+        <Header />
+        <div className={classes.options}>
+          <div
+            id="dashboardOption"
+            onClick={this.toDashboard}
+            className={classes.dashboardOption}
+          >
+            Dashboard
+          </div>
+          <div
+            id="actionButton"
+            onClick={this.toActions}
+            className={classes.actionButton}
+          >
+            Actions
+          </div>
+          <div
+            id="tableList"
+            onClick={this.toTables}
+            className={classes.tableList}
+          >
+            Tables
+          </div>
+        </div>
+        {content}
+      </div>
+    );
   }
 }
 
