@@ -10166,12 +10166,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xDf8605bb1c2A5A46668cF304e3E4b7a1484D97E4",
-      "transactionHash": "0xa1b00ffd1e56c7fa61394ef83acbffb16cf1547f6ab3ab6a12b8a82fff506149"
+      "address": "0x6bE9C9605F56C935673006b06423206CfDDaeb1f",
+      "transactionHash": "0x2fea6fb7ffaf350177369c8d30a3a5b65ffec14958e3118548ce2bb42249af17"
     }
   },
   "schemaVersion": "3.2.4",
-  "updatedAt": "2020-10-05T05:58:16.461Z",
+  "updatedAt": "2020-10-07T02:42:14.514Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

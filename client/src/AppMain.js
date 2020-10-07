@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {  Router, Route, Link } from "react-router-dom";
 import Candidate from "./components/candidate/candidate";
 import voter from "./components/voter/voter";
 import { connect, Provider } from "react-redux";
@@ -13,7 +13,9 @@ import ApproveVoter from "./components/approve/ApproveVoter";
 import login from "./components/login/login"
 import castVote from "./components/castVote/castVote"
 import OtpPage from "./components/login/otpPage";
+import { createBrowserHistory } from "history";
 
+const history = createBrowserHistory();
 class App extends Component {
   state = {};
 
@@ -21,7 +23,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ErrorMessage />
-        <Router>
+        <Router history={history}>
           <Route path="/" exact component={landing} />
           <Route path="/approve" component={Approve} />
           <Route path="/login" component={login} />
@@ -31,7 +33,7 @@ class App extends Component {
           <Route path="/candidate" component={Candidate} />
           <Route path="/admin" component={Admin} />
           <Route path="/voter" component={voter} />
-        </Router>         
+        </Router>
       </Provider>
     );
   }

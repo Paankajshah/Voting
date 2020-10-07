@@ -3,8 +3,13 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { store } from "../../store";
 import { voterData, candidateData, addError } from "../../store/actions";
+import { withRouter } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
 import "./approve.css";
+
+const history = createBrowserHistory();
+
 class ApproveCandidate extends Component {
   state = {
     account: "",
@@ -38,6 +43,7 @@ class ApproveCandidate extends Component {
       const data = {
         citizenship:this.state.result.citizenship,
         account: this.state.account,
+        key: this.state.key,
         id: this.state.result._id,
       };
       axios
@@ -51,7 +57,8 @@ class ApproveCandidate extends Component {
         .catch((err) => {
           console.log(err.message);
         });
-      this.props.history.goBack();
+   
+      history.push("/admin");
   };
   render() {
     return (
@@ -80,4 +87,4 @@ class ApproveCandidate extends Component {
   }
 }
 
-export default connect((store) => ({ error: store.error }))(ApproveCandidate);
+export default connect((store) => ({ error: store.error }))  (ApproveCandidate);

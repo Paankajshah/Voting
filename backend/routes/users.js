@@ -4,13 +4,10 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+
 const decode = require("jwt-decode");
-// const mailgun = require("mailgun-js");
-// const DOMAIN = "sandboxd56c5b7303854a60adb7687fea40b24c.mailgun.org";
-// const mg = mailgun({
-//   apiKey: "8460cd11ef766f5ed68751e9231f8f6f-4d640632-fe2f18de",
-//   domain: DOMAIN,
-// });
+
 
 const User = require("../models/users");
 users.use(cors());
@@ -36,10 +33,17 @@ users.post("/login", (req, res) => {
   User.User.findOne({
     email: req.body.email,
   })
-    .then((user) => {
+    .then( async (user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           // Passwords match
+          let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "vascode7@gmail.com",
+              pass: "punkaj9411",
+            },
+          });
           const payload = {
             _id: user._id,
             name: user.name,
@@ -54,7 +58,24 @@ users.post("/login", (req, res) => {
         const data = {
           token: token,
           userData: payload,
-        };
+          };
+         
+            
+            let info = await transporter.sendMail({
+              from: "'Voting' <vascode7@gmail.com>", // sender address
+              to: user.email, // list of receivers
+              subject: "Credentials", // Subject line
+              html: `<div>
+              <div style="text-align:center;">
+              <h1 style="color:grey;"> Hi!! ${user.name}</h1>
+              
+              </div>
+              <p>Your otp code is :<b>${ranNum}</b> </p>
+              
+              </div>`, // html body
+            });
+          
+
           res.send(token);
         } else {
           // Passwords don't match

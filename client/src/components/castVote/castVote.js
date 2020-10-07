@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import VotingContract from "../../contracts/Voting.json";
 import getWeb3 from "../../getWeb3";
+import decode from "jwt-decode";
+
 import { store } from "../../store";
 import { setCurrentUser, addError, removeError } from "../../store/actions";
 import "./castVote.css"
@@ -17,6 +19,7 @@ class CastVote extends Component {
     totalVoter: null,
     totalCandidate: null,
     candidates: [],
+    name:"",
   };
 
   componentDidMount = async () => {
@@ -33,6 +36,17 @@ class CastVote extends Component {
       const add = await instance.methods.ballotOfficialAddress.call().call();
       const voter = await instance.methods.totalVoter.call().call();
       const candidate = await instance.methods.totalCandidate.call().call();
+      if (localStorage.loginToken) {
+        // setToken(localStorage.jwtToken);
+        try {
+          const data = decode(localStorage.loginToken);
+          const name = data.name;
+          this.setState({name:name})
+        
+        } catch (err) {
+          console.log(err)
+        }
+      }
       this.setState({
         voteStatus: sta,
         web3,
@@ -56,6 +70,7 @@ class CastVote extends Component {
       // console.log(voter)
       // const candidate = await contract.methods.totalCandidate.call().call();
       // console.log(candidate)
+      document.getElementById("button").style.display = "none";
       for (let i = 0; i <= totalCandidate-1; i++) {
         const data = await contract.methods.candidateAddress(i).call();
         const dataa = await contract.methods.candRegister(data).call();
@@ -125,7 +140,7 @@ class CastVote extends Component {
                   src={image}
                   alt="Card image cap"
                   width="100px"
-                  height="100px"
+                  height="150px"
                 />
                 <div className="card-body">
                   <p className="card-text">{candidate.name}</p>
@@ -171,6 +186,7 @@ class CastVote extends Component {
               <span className="marquee">Voting Section</span>
             </marquee>
           </div>
+          <p className="name">{this.state.name}</p>
           <button
             className="btn btn-primary logout"
             onClick={this.logoutHandler}
@@ -179,9 +195,18 @@ class CastVote extends Component {
           </button>
         </div>
 
-        <div className="voting-info">this is voting info</div>
+        <div className="voting-info">
+          <div className="details">Details</div>
+          <p className="voterName">Voting process:</p>
+          <p className="voterName">Name:</p>
+          <p className="voterName">Your Email:</p>
+          <p className="voterName">Your Voting Status:</p>
+          <div>
+          <div>Instructions to vote</div>
+          </div>
+        </div>
         <div className="voting-area">
-          <button className="vote-active-button" onClick={this.runExample}>
+          <button id="button" className="vote-active-button" onClick={this.runExample}>
             Start Voting
           </button>
           <div className="row">{cards}</div>
