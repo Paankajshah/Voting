@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "../header/header";
 
-function Voter() {
+function Voter(props) {
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -27,6 +28,7 @@ function Voter() {
       .post("http://localhost:5000/voting/voter/", data)
       .then((res) => {
         console.log(res.data);
+        props.history.push("/")
       })
       .catch((err) => {
         console.log(err.message);
@@ -34,6 +36,8 @@ function Voter() {
   };
   return (
     <div>
+      <Header props={props}>Voter Form</Header>
+
       <form onSubmit={submit} style={{ margin: "50px 50px 50px 50px" }}>
         <div class="form-group">
           <label for="name">Name</label>

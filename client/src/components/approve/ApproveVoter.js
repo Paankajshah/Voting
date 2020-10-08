@@ -41,6 +41,8 @@ class ApproveVoter extends Component {
     const data = {
       citizenship: this.state.result.citizenship,
       account: this.state.account,
+      key: this.state.key,
+
       id: this.state.result._id,
     };
     axios

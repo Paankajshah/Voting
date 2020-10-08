@@ -33,6 +33,8 @@ class Admin extends Component {
     try {
       document.getElementById("dashboardOption").style.backgroundColor =
         "lightblue";
+      document.getElementById("actions").style.display = "none";
+      document.getElementById("tables").style.display = "none";
 
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -196,23 +198,29 @@ class Admin extends Component {
     });
   };
   toTables = () => {
-    scroll.scrollTo(1250);
     document.getElementById("tableList").style.backgroundColor = "lightblue";
     document.getElementById("dashboardOption").style.backgroundColor = "white";
     document.getElementById("actionButton").style.backgroundColor = "white";
+    document.getElementById("actions").style.display = "none";
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("tables").style.display = "block";
   };
   toActions = () => {
-    scroll.scrollTo(600);
     document.getElementById("tableList").style.backgroundColor = "white";
     document.getElementById("dashboardOption").style.backgroundColor = "white";
     document.getElementById("actionButton").style.backgroundColor = "lightblue";
+    document.getElementById("actions").style.display = "block";
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("tables").style.display = "none";
   };
   toDashboard = () => {
-    scroll.scrollTo(0);
     document.getElementById("tableList").style.backgroundColor = "white";
     document.getElementById("dashboardOption").style.backgroundColor =
       "lightblue";
     document.getElementById("actionButton").style.backgroundColor = "white";
+    document.getElementById("actions").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("tables").style.display = "none";
   };
   render() {
     console.log("inside admin", this.props.people.candidates);
@@ -288,12 +296,15 @@ class Admin extends Component {
             <p>Vote Status :: {stats} </p>
           </div>
           <div id="actions" className={classes.actions}>
-            <button onClick={this.startVote}>Start Vote</button>
-            <br />
-            <button onClick={this.endVote}>End Vote</button>
-            <br />
-            <button onClick={this.declareResult}>Declare Result</button>
-            <br />
+            <div className={classes.startVote} onClick={this.startVote}>
+              Start Vote
+            </div>
+            <div className={classes.endVote} onClick={this.endVote}>
+              End Vote
+            </div>
+            <div className={classes.declareResult} onClick={this.declareResult}>
+              Declare Result
+            </div>
           </div>
 
           <div id="tables" className={classes.tables}>

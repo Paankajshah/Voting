@@ -8,6 +8,9 @@ const accountSchema = new mongoose.Schema({
   account: {
     type: String,
   },
+    key: {
+      type: String,
+    },
   details: {
     name: {
       type: String,
@@ -24,6 +27,8 @@ const accountSchema = new mongoose.Schema({
 function validateAccount(voter) {
     const schema = Joi.object().keys({
       citizenship: Joi.string().required(),
+      key: Joi.string().required(),
+
       account: Joi.string().required(),
       id: Joi.string().required(),
     });

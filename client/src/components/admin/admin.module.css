@@ -32,6 +32,9 @@ width:100%;
 height: 50px;
 background-color: #1976d2;
 position: fixed;
+text-align: center;
+padding-top: 10px;
+font-size: 20px;
   }
 
   .options{
@@ -58,19 +61,61 @@ float: right;
 
   .dashboard{
 height: calc(100vh - 50px);
-margin-top: 50px;
+margin-top: 80px;
 
 
   }
 
   .actions{
     height:100vh;
-margin-top: 30px;
+margin-top: 60px;
+padding:30px;
 
+  }
+
+  .actions > div:hover{
+    cursor: pointer;
   }
   .tables{
     height:100vh;
+margin-top: 50px;
+
   }
 
   .actionbutton{
+  }
+
+  .startVote{
+    float: left;
+    height: 200px;
+    width: 200px;
+    background-color: burlywood;
+    text-align: center;
+    padding-top: 80px;
+    font-size:20px;
+
+  }
+
+  .endVote{
+    float: left;
+    margin-left:200px;
+    height: 200px;
+    width: 200px;
+    background-color: burlywood;
+        text-align: center;
+    padding-top: 80px;
+    font-size:20px;
+
+  }
+
+  .declareResult{
+    float: right;
+    margin-right: 20px;
+    height: 200px;
+    width: 200px;
+    background-color: burlywood;
+        text-align: center;
+    padding-top: 80px;
+    font-size:20px;
+
   }

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { login } from "../../store/actions";
+import { login, removeError } from "../../store/actions";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { voterData, candidateData, addError } from "../../store/actions";
+import { store } from "../../store";
 
 class Login extends Component {
   constructor() {
@@ -26,15 +28,19 @@ class Login extends Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
-
+    store.dispatch(removeError());
     const user = {
       email: this.state.email,
       password: this.state.password,
     };
-    this.props.login(user);
-    this.props.history.push("/otppage")
+    const data = await this.props.login(user);
+    if (this.props.error.message === null) {
+      
+      this.props.history.push("/otppage")
+    }
+    
   }
 
   handleRegister = () => {
@@ -44,6 +50,7 @@ class Login extends Component {
   render() {
     return (
       <div className="container">
+
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
@@ -57,6 +64,7 @@ class Login extends Component {
                   placeholder="Enter email"
                   value={this.state.email}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -68,6 +76,7 @@ class Login extends Component {
                   placeholder="Password"
                   value={this.state.password}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <button
@@ -80,7 +89,7 @@ class Login extends Component {
                 onClick={this.handleRegister}
                 className="btn btn-lg btn-primary btn-block"
               >
-              Home
+                Home
               </button>
             </form>
           </div>
@@ -90,4 +99,6 @@ class Login extends Component {
   }
 }
 
-export default connect((store) => ({ auth: store.auth }), { login })(Login);
+export default connect((store) => ({ auth: store.auth, error: store.error }), {
+  login,
+})(Login);

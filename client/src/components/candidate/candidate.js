@@ -4,6 +4,7 @@ import {connect } from 'react-redux';
 import { store } from '../../store';
 import { voterData, candidateData , addError } from "../../store/actions";
 import FileUpload from './FileUpload';
+import Header from "../header/header"
 
 function Candidate(props) {
     const [state , setState] = useState({
@@ -63,6 +64,7 @@ function Candidate(props) {
     }
     return (
       <div>
+        <Header props={props}>Candidate Form</Header>
         <form onSubmit={submit} style={{ margin: "50px 50px 50px 50px" }}>
           <div className="form-row">
             <div className="form-group col-md-6">
